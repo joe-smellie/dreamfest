@@ -37,3 +37,18 @@ export async function getEventsForDay(day: string) {
   
   return events as EventWithLocation[]
 }
+
+export async function getLocationById(id: number): Promise<Location> {
+  return await connection('locations')
+    .where({ id })
+    .select(
+      '*'
+    )
+    .first()
+}
+
+export async function updateLocation(id: number, name: string, description: string): Promise<Location> {
+  return await connection('locations')
+  .where({ id })
+  .update({ name, description })
+}

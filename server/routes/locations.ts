@@ -34,12 +34,14 @@ router.get('/:id', async (req, res, next) => {
   const { id } = req.params
   try {
     // TODO: Get the location based on its id and replace this viewData
-    const location = {
-      id: id,
-      name: 'TangleStage',
-      description:
-        'Not the biggest stage, but perhaps the most hip. Not the biggest stage, but perhaps the most hip. Not the biggest stage, but perhaps the most hip.',
-    }
+    const location = db.getLocationById(Number(id))
+    
+    // {
+    //   id: id,
+    //   name: 'TangleStage',
+    //   description:
+    //     'Not the biggest stage, but perhaps the most hip. Not the biggest stage, but perhaps the most hip. Not the biggest stage, but perhaps the most hip.',
+    // }
     res.json(location)
   } catch (e) {
     next(e)
@@ -50,6 +52,10 @@ router.patch('/:id', async (req, res, next) => {
   try {
     const id = Number(req.params.id)
     const { name, description } = req.body
+    const updatedLocation = db.updateLocation(id, name, description)
+
+    res.json(updatedLocation)
+
     // TODO: call db.updateLocation with these details
     res.sendStatus(204)
   } catch (e) {
