@@ -28,7 +28,6 @@ export async function getEventsForDay(day: string) {
     'events.time as time',
     'events.name as eventName',
     'events.description as description',
-    'location.name as locationName',
     'events.location_id as locationId',
     'locations.id as location_id',
     'locations.name as name',
@@ -51,4 +50,16 @@ export async function updateLocation(id: number, name: string, description: stri
   return await connection('locations')
   .where({ id })
   .update({ name, description })
+}
+
+export async function addNewEvent(name: string, description: string, time: string, location_id: number, day: string): Promise<Event> {
+  return await connection('events')
+    .insert({name, description, time, location_id, day})
+    .returning('id')
+}
+
+export async function deleteEvent(id: number): Promise<void> {
+  await connection('event')
+  .where({ id })
+  .del()
 }
