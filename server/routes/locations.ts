@@ -52,7 +52,7 @@ router.patch('/:id', async (req, res, next) => {
   try {
     const id = Number(req.params.id)
     const { name, description } = req.body
-    db.updateLocation(id, name, description)
+    const updatedLocation = db.updateLocation(id, name, description)
 
     res.json(updatedLocation)
 
