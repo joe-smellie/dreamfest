@@ -58,8 +58,8 @@ export async function addNewEvent(name: string, description: string, time: strin
     .returning('id')
 }
 
-export async function deleteEvent(id: number): Promise<void> {
-  await connection('event')
+export async function deleteEvent(id: number) {
+  return await connection('events')
   .where({ id })
   .del()
 }

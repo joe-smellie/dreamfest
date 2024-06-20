@@ -33,13 +33,13 @@ describe('it should delete an event', () => {
         
         //catch ya later
         const res = await request(server).delete('/api/v1/events/1')
-        console.log('Where are ya res', res.status) // 500 error
+        console.log('Where are you showing', res.body) 
 
         //after
         const after = await request(server).get('/api/v1/schedule/friday')
         console.log('What is happening here?' , after.body)
 
-        expect(original.body.length).toBeGreaterThan(after.body.length)
+        expect(original.body.events.length).toBeGreaterThan(after.body.events.length)
         expect(res.status).toBe(204)
     })
 })

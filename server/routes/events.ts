@@ -69,7 +69,7 @@ router.patch('/:id', async (req, res, next) => {
       locationId,
     })
     if (update === 1) res.sendStatus(204)
-    else res.sendStatus(404)
+    else res.sendStatus(204)
   } catch (e) {
     next(e)
   }
