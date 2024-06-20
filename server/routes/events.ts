@@ -23,7 +23,8 @@ router.post('/', async (req, res, next) => {
 router.delete('/:id', async (req, res, next) => {
   try {
     const id = Number(req.params.id)
-    db.deleteEvent(id)
+    await db.deleteEvent(id)
+    res.sendStatus(204)
     // TODO: DELETE the event with this matching ID
   } catch (e) {
     next(e)
@@ -59,10 +60,20 @@ router.patch('/:id', async (req, res, next) => {
     const day = validateDay(req.body.day)
     const locationId = Number(req.body.locationId)
 
-    // TODO: UPDATE the event in the db with the matching ID using these details,
-    // if no event has a matching id, respond with a 404 instead
-    res.sendStatus(204)
+    const update = await db.updateEvent({
+      id,
+      name,
+      description,
+      time,
+      day,
+      locationId,
+    })
+    if (update === 1) res.sendStatus(204)
+    else res.sendStatus(404)
   } catch (e) {
     next(e)
   }
 })
+    // TODO: UPDATE the event in the db with the matching ID using these details,
+    // if no event has a matching id, respond with a 404 instead
+

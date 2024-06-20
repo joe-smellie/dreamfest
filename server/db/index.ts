@@ -63,3 +63,27 @@ export async function deleteEvent(id: number): Promise<void> {
   .where({ id })
   .del()
 }
+
+export async function getEventById(id: number): Promise<Event> {
+  return await connection('events')
+    .where({ id })
+    .first()
+    .select(
+      'id',
+      'location_id as locationId',
+      'day',
+      'time',
+      'name',
+      'description',
+    )
+}
+
+export async function updateEvent(updatedEvent: Event) {
+  return await connection('events').where({ id: updatedEvent.id }).update({
+    name: updatedEvent.name,
+    description: updatedEvent.description,
+    day: updatedEvent.day,
+    time: updatedEvent.time,
+    location_id: updatedEvent.locationId,
+  })
+}
